@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Amplify } from 'aws-amplify';
-import { fetchListZellerCustomers } from './service'
+import { fetchListZellerCustomers } from './services'
 import { Customer } from './interface';
 import type { RadioChangeEvent } from 'antd';
 import { Card, Radio, Space, List } from 'antd';
 import { headerStyle, siderStyle, rightStyle, listStyle } from './style';
-import './App.css';
 
-import awsconfig from './aws-exports';
+import awsconfig from './services/aws-exports';
 
 Amplify.configure(awsconfig);
 
@@ -29,7 +28,7 @@ const App = () => {
     setUserType(value);
   };
   return (
-    <div className="App">
+    <>
       <Card title={<div>User Types</div>} style={headerStyle}>
         <Radio.Group onChange={onChange} defaultValue="Admin" value={userType}>
           <Space direction="vertical" style={{ textAlign: 'left' }}>
@@ -61,7 +60,7 @@ const App = () => {
           />
         </Card>
       </Space>
-    </div>
+    </>
   );
 }
 
