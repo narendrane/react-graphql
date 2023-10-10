@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Amplify } from 'aws-amplify';
 import { fetchListZellerCustomers } from './services'
+import { CustomerList } from './CustomerList'
 import { Customer } from './interface';
 import type { RadioChangeEvent } from 'antd';
-import { Card, Radio, Space, List } from 'antd';
-import { headerStyle, siderStyle, rightStyle, listStyle } from './style';
+import { Card, Radio, Space } from 'antd';
+import { headerStyle} from './style';
 
 import awsconfig from './services/aws-exports';
 
@@ -20,7 +21,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    setFilteredUser(customers?.filter(user => user.role == userType.toUpperCase()));
+    setFilteredUser(customers?.filter(user => user.role === userType.toUpperCase()));
   }, [userType, customers])
 
   const onChange = (e: RadioChangeEvent) => {
@@ -32,32 +33,14 @@ const App = () => {
       <Card title={<div>User Types</div>} style={headerStyle}>
         <Radio.Group onChange={onChange} defaultValue="Admin" value={userType}>
           <Space direction="vertical" style={{ textAlign: 'left' }}>
-            <Radio value="Admin">Admin</Radio>
-            <Radio value="Manager">Manager</Radio>
+            <Radio value="Admin" name="admin">Admin</Radio>
+            <Radio value="Manager" name="manager">Manager</Radio>
           </Space>
         </Radio.Group>
       </Card>
       <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
         <Card title={<div>{userType} Users</div>} style={headerStyle}>
-          <List
-            style={listStyle}
-            size="large"
-            itemLayout="horizontal"
-            dataSource={filteredUser}
-            renderItem={(item, index) => (
-              <List.Item>
-                <div style={{ width: "50%" }}>
-                  <div style={siderStyle}>{item.name[0]}</div>
-                  <div style={rightStyle}>
-                    <List.Item.Meta
-                      title={item.name}
-                      description={userType}
-                    />
-                  </div>
-                </div>
-              </List.Item>
-            )}
-          />
+        <CustomerList {...{filteredUser, userType}}/>
         </Card>
       </Space>
     </>

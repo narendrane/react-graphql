@@ -1,18 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { render, screen } from '@testing-library/react';
-import { Amplify } from 'aws-amplify';
+import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
-jest.mock('aws-amplify');
 
 describe('Index', () => {
-  beforeEach(() => {
-  });
-
 test('renders App and validates heading', () => {
   render(<App />);
-  const linkElement = screen.getByText(/user types/i);
-  expect(linkElement).toBeInTheDocument();
+  const textElement = screen.getByText(/user types/i);
+  const listElement = screen.getByTestId('customer-lists');
+  expect(textElement).toBeInTheDocument();
+  expect(listElement).toBeInTheDocument();
 });
 
+test('Should show the Radio buttons', async () => { 
+    render(<App />);  
+    const adminRadio = screen.getByLabelText('Admin');
+    const managerRadio = screen.getByLabelText('Manager');
+    expect(adminRadio).toBeChecked();
+    fireEvent.click(managerRadio);
+    expect(adminRadio).not.toBeChecked();
+    expect(managerRadio).toBeChecked();
+  });
 });
