@@ -13,7 +13,7 @@ Amplify.configure(awsconfig);
 
 const App = () => {
   const [customers, setCustomers] = useState<Customer[]>([]);
-  const [userType, setUserType] = useState('Admin');
+  const [userType, setUserType] = useState<string>('Admin');
   const [filteredUser, setFilteredUser] = useState<Customer[]>([]);
 
   useEffect(() => {

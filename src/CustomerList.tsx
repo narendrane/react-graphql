@@ -1,5 +1,5 @@
-import { Card, Radio, Space, List } from 'antd';
-import { headerStyle, siderStyle, rightStyle, listStyle } from './style';
+import { List } from 'antd';
+import { siderStyle, rightStyle, listStyle } from './style';
 import { Customer } from './interface';
 type filteredUserProps = {
     filteredUser: Customer[];
